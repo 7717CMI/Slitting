@@ -245,15 +245,42 @@ export function GroupedBarChart({ title, height = 400 }: GroupedBarChartProps) {
       } else if (filters.viewMode === 'segment-mode') {
         // For segment mode with Level 2 aggregation, extract keys from prepared data
         series = extractSeriesFromPreparedData()
-      } else {
-        // Geography mode - use selected geographies when Global data is used as fallback
-        const regionalGeographies = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa']
-        const hasRegionalSelection = filters.geographies.some(g => regionalGeographies.includes(g))
-        const hasOnlyGlobalRecords = filtered.every(r => r.geography === 'Global')
+      } else if (filters.viewMode === 'geography-mode') {
+        // Geography mode - use the selected geographies as series
+        // But when a parent geography is selected along with its children,
+        // exclude the parent and only show the children to avoid double-counting
+        if (filters.geographies.length > 0) {
+          // Define parent-child relationships for geographies
+          const geographyHierarchy: Record<string, string[]> = {
+            'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+            'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+            'North America': ['U.S.', 'United States', 'Canada'],
+            'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific']
+          }
 
-        series = (hasRegionalSelection && hasOnlyGlobalRecords && !filters.geographies.includes('Global'))
-          ? filters.geographies.filter(g => regionalGeographies.includes(g))
-          : getUniqueGeographies(filtered)
+          // Filter out parent geographies if their children are also selected
+          const selectedGeos = filters.geographies
+          const filteredSeries = selectedGeos.filter(geo => {
+            // Check if this is a parent geography
+            const children = geographyHierarchy[geo]
+            if (children && children.length > 0) {
+              // Check if any children are also selected
+              const hasChildrenSelected = children.some(child => selectedGeos.includes(child))
+              // If children are selected, exclude the parent to avoid showing both
+              return !hasChildrenSelected
+            }
+            // Not a parent or no children selected - keep it
+            return true
+          })
+
+          series = filteredSeries
+        } else {
+          // No geographies selected - show all from data
+          series = getUniqueGeographies(filtered)
+        }
+      } else {
+        // Fallback for other view modes
+        series = getUniqueGeographies(filtered)
       }
     }
 

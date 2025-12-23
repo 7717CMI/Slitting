@@ -719,6 +719,47 @@ async function processSegmentTypeAsync(
               // This prevents them from appearing at root level in the cascade filter
             }
           })
+        } else if (isRegionSegmentType && geography === 'Global') {
+          // Special handling for Global's "By Region" - extract all regions and their children
+          // The structure is: Global > By Region > {Region} > {Country}
+          // We need to build: hierarchy[Region] = [Country1, Country2, ...]
+          const regionData = sourceData[geography][segmentType]
+          if (regionData && typeof regionData === 'object') {
+            Object.keys(regionData).forEach(regionName => {
+              // Add region as a segment item (root level)
+              if (!segmentItems.includes(regionName)) {
+                segmentItems.push(regionName)
+              }
+              if (!hierarchy[regionName]) {
+                hierarchy[regionName] = []
+              }
+
+              // Get children of this region
+              const regionChildren = regionData[regionName]
+              if (regionChildren && typeof regionChildren === 'object') {
+                const childKeys = Object.keys(regionChildren).filter(childName => {
+                  // Skip year keys and metadata
+                  if (/^\d{4}$/.test(childName) || childName === 'CAGR' || childName === '_aggregated' || childName === '_level') {
+                    return false
+                  }
+                  return true
+                })
+
+                childKeys.forEach(childName => {
+                  // Skip self-referencing entries when there are other children
+                  // e.g., if Europe has children [Europe, Germany, Italy], skip Europe
+                  // But if United States only has [United States], keep it
+                  if (childName === regionName && childKeys.length > 1) {
+                    return // Skip self-reference when there are real children
+                  }
+                  // Add child to region's hierarchy
+                  if (!hierarchy[regionName].includes(childName)) {
+                    hierarchy[regionName].push(childName)
+                  }
+                })
+              }
+            })
+          }
         } else {
           // Standard hierarchy building for non-region segment types
           // Build segment items and hierarchy from structure (not just paths with data)

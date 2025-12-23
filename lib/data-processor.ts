@@ -150,9 +150,12 @@ export function filterData(
     if (!geoMatch) {
       // Check if any selected geography is a parent of this record's geography
       // Regions contain countries - map them accordingly
+      // Updated to match the new geography hierarchy
       const regionToCountries: Record<string, string[]> = {
-        'North America': ['U.S.', 'Canada'],
-        'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
+        'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+        'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+        // Legacy mappings for backward compatibility
+        'North America': ['U.S.', 'United States', 'Canada'],
         'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
         'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
         'Middle East': ['GCC', 'Israel', 'Rest of Middle East'],
@@ -167,15 +170,25 @@ export function filterData(
         }
       }
 
-      // IMPORTANT: Include Global data when regional geographies are selected
-      // This is because segment types like "By Form" only exist under Global
-      // When user selects "North America" + "By Form", we need Global's By Form data
+      // IMPORTANT: Include Global data ONLY when:
+      // 1. The segment type data only exists under Global (like "By Form" segments)
+      // 2. AND no records exist for the selected geographies with this segment type
+      // This is a fallback mechanism, not a default inclusion
+      // For the new hierarchy (Europe, Asia with children), we should NOT include Global
+      // unless the data genuinely doesn't exist for the selected geographies
       if (!geoMatch && record.geography === 'Global') {
-        // Check if any selected geography is a regional geography (not Global itself)
-        const regionalGeographies = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa']
-        const hasRegionalSelection = filters.geographies.some(g => regionalGeographies.includes(g))
-        if (hasRegionalSelection && !filters.geographies.includes('Global')) {
-          geoMatch = true
+        // Only include Global as a fallback for segment types that don't have regional data
+        // The new geography hierarchy (Europe -> Germany, Italy, UK, etc.) should NOT trigger Global inclusion
+        const newHierarchyGeographies = ['Europe', 'Asia', 'Germany', 'Italy', 'UK', 'Rest of Europe', 'Japan', 'South Korea', 'China', 'Rest of Asia', 'United States', 'Global']
+        const hasNewHierarchySelection = filters.geographies.some(g => newHierarchyGeographies.includes(g))
+
+        // If user selected geographies from the new hierarchy, don't automatically include Global
+        if (!hasNewHierarchySelection) {
+          const regionalGeographies = ['North America', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa']
+          const hasRegionalSelection = filters.geographies.some(g => regionalGeographies.includes(g))
+          if (hasRegionalSelection && !filters.geographies.includes('Global')) {
+            geoMatch = true
+          }
         }
       }
     }
@@ -860,9 +873,12 @@ export function prepareGroupedBarData(
         const geoMap = new Map<string, Map<string, number>>()
 
         // Region to countries mapping for parent geography aggregation
+        // Updated to match the new geography hierarchy
         const regionToCountriesStacked: Record<string, string[]> = {
-          'North America': ['U.S.', 'Canada'],
-          'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
+          'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+          'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+          // Legacy mappings
+          'North America': ['U.S.', 'United States', 'Canada'],
           'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
           'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
           'Middle East': ['GCC', 'Israel', 'Rest of Middle East'],
@@ -974,10 +990,13 @@ export function prepareGroupedBarData(
           }
         } else if (viewMode === 'geography-mode') {
           // In geography mode, aggregate child geographies under their parent
-          // if the parent is selected (e.g., U.S. + Canada data shown as "North America")
+          // if the parent is selected (e.g., Germany + Italy data shown as "Europe")
+          // Updated to match the new geography hierarchy
           const regionToCountries: Record<string, string[]> = {
-            'North America': ['U.S.', 'Canada'],
-            'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
+            'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+            'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+            // Legacy mappings
+            'North America': ['U.S.', 'United States', 'Canada'],
             'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
             'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
             'Middle East': ['GCC', 'Israel', 'Rest of Middle East'],
@@ -1190,9 +1209,12 @@ export function prepareLineChartData(
       } else if (viewMode === 'geography-mode') {
         // Lines represent geographies (aggregate across segments)
         // Map child geographies to their parent if parent is selected
+        // Updated to match the new geography hierarchy
         const regionToCountriesLine: Record<string, string[]> = {
-          'North America': ['U.S.', 'Canada'],
-          'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
+          'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+          'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+          // Legacy mappings
+          'North America': ['U.S.', 'United States', 'Canada'],
           'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
           'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
           'Middle East': ['GCC', 'Israel', 'Rest of Middle East'],
@@ -1738,9 +1760,12 @@ export function prepareIntelligentMultiLevelData(
   })
 
   // Region to countries mapping for geography-mode
+  // Updated to match the new geography hierarchy
   const regionToCountries: Record<string, string[]> = {
-    'North America': ['U.S.', 'Canada'],
-    'Europe': ['U.K.', 'Germany', 'Italy', 'France', 'Spain', 'Russia', 'Rest of Europe'],
+    'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+    'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia'],
+    // Legacy mappings
+    'North America': ['U.S.', 'United States', 'Canada'],
     'Asia Pacific': ['China', 'India', 'Japan', 'South Korea', 'ASEAN', 'Australia', 'Rest of Asia Pacific'],
     'Latin America': ['Brazil', 'Argentina', 'Mexico', 'Rest of Latin America'],
     'Middle East': ['GCC', 'Israel', 'Rest of Middle East'],
@@ -1748,7 +1773,8 @@ export function prepareIntelligentMultiLevelData(
   }
 
   // Check if we need Global-to-regional mapping
-  const regionalGeographies = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa']
+  // Updated to include both old and new geography hierarchies
+  const regionalGeographies = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa', 'Asia']
   const hasRegionalSelection = geographies.some(g => regionalGeographies.includes(g))
   const hasOnlyGlobalRecords = records.every(r => r.geography === 'Global')
   const needsGlobalMapping = viewMode === 'geography-mode' && hasRegionalSelection && hasOnlyGlobalRecords && !geographies.includes('Global')

@@ -19,7 +19,8 @@ function OpportunityGeographyMultiSelect() {
   const [searchTerm, setSearchTerm] = useState('')
   const dropdownRef = useRef<HTMLDivElement>(null)
   
-  const shouldHide = opportunityFilters.segmentType === 'By Region' || opportunityFilters.segmentType === 'By State'
+  // Don't hide geography when "By Region" is selected - user needs to select Europe/Asia to see children
+  const shouldHide = opportunityFilters.segmentType === 'By State'
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -38,9 +39,20 @@ function OpportunityGeographyMultiSelect() {
   const geographyOptions = useMemo(() => {
     if (!data || !data.dimensions?.geographies) return []
     const allGeographies = data.dimensions.geographies.all_geographies || []
-    if (!searchTerm) return allGeographies
+
+    // Define root-level geographies (exclude children like Germany, Italy, etc.)
+    const ROOT_GEOGRAPHIES = ['Global', 'United States', 'Europe', 'Asia']
+    // Define child geographies that should be excluded from the main list
+    const CHILD_GEOGRAPHIES = ['Germany', 'Italy', 'UK', 'Rest of Europe', 'Japan', 'South Korea', 'China', 'Rest of Asia']
+
+    // Filter to only show root-level geographies
+    const rootGeographies = allGeographies.filter(geo =>
+      ROOT_GEOGRAPHIES.includes(geo) || !CHILD_GEOGRAPHIES.includes(geo)
+    )
+
+    if (!searchTerm) return rootGeographies
     const search = searchTerm.toLowerCase()
-    return allGeographies.filter(geo => geo.toLowerCase().includes(search))
+    return rootGeographies.filter(geo => geo.toLowerCase().includes(search))
   }, [data, searchTerm])
 
   if (shouldHide) return null
@@ -563,57 +575,163 @@ export function D3BubbleChartIndependent({ title, height = 500 }: BubbleChartPro
         const isByCountrySegmentType = activeFilters.segmentType === 'By Country'
 
         if (isByRegionSegmentType) {
-          // Group records by their parent geography (region)
-          const regionGroups = new Map<string, typeof filteredRecords>()
-          const mainRegions = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa']
+          // Check if a specific parent geography (Europe/Asia) is selected
+          // If so, show children as individual bubbles instead of aggregating
+          const PARENT_GEOGRAPHIES = ['Europe', 'Asia']
+          const GEOGRAPHY_CHILDREN: Record<string, string[]> = {
+            'Europe': ['Germany', 'Italy', 'UK', 'Rest of Europe'],
+            'Asia': ['Japan', 'South Korea', 'China', 'Rest of Asia']
+          }
 
-          filteredRecords.forEach(record => {
-            // Use the record's geography as the grouping key (this is the parent region)
-            const region = record.geography
-            if (region && mainRegions.includes(region)) {
-              if (!regionGroups.has(region)) {
-                regionGroups.set(region, [])
-              }
-              regionGroups.get(region)!.push(record)
+          const selectedGeos = activeFilters.geographies || []
+          const selectedParentGeo = selectedGeos.find(geo => PARENT_GEOGRAPHIES.includes(geo))
+
+          if (selectedParentGeo) {
+            // A parent geography (Europe/Asia) is selected
+            // Show its children as individual bubbles
+            const expectedChildren = GEOGRAPHY_CHILDREN[selectedParentGeo] || []
+
+            console.log('🌍 By Region with parent geography selected:', {
+              selectedParentGeo,
+              expectedChildren,
+              currentRecords: filteredRecords.length,
+              recordSegments: [...new Set(filteredRecords.map(r => r.segment))],
+              recordGeographies: [...new Set(filteredRecords.map(r => r.geography))]
+            })
+
+            // The "By Region" data for Europe/Asia children is stored under Global geography
+            // So we need to search the full dataset, not just the filtered records
+            const fullDataset = activeFilters.dataType === 'value'
+              ? (data.data.value?.geography_segment_matrix || [])
+              : (data.data.volume?.geography_segment_matrix || [])
+
+            // Look for records where geography is "Global" and segment is one of the expected children
+            let childRecords = fullDataset.filter((record: any) =>
+              record.geography === 'Global' &&
+              record.segment_type === 'By Region' &&
+              expectedChildren.includes(record.segment)
+            )
+
+            // If no records found in Global, also try from filtered records
+            if (childRecords.length === 0) {
+              childRecords = filteredRecords.filter(record => {
+                // Match if segment is one of the expected children
+                if (expectedChildren.includes(record.segment)) {
+                  return true
+                }
+                // Match if geography is the selected parent and segment is a child
+                if (record.geography === selectedParentGeo && expectedChildren.includes(record.segment)) {
+                  return true
+                }
+                // Match if the record's segment hierarchy contains the parent
+                if (record.segment_hierarchy?.level_1 === selectedParentGeo) {
+                  return true
+                }
+                return false
+              })
             }
-          })
 
-          console.log('🌍 Aggregating By Region to main regions:', [...regionGroups.keys()])
+            console.log('🌍 Filtered to children of', selectedParentGeo, ':', {
+              childRecordsFound: childRecords.length,
+              segments: [...new Set(childRecords.map((r: any) => r.segment))]
+            })
 
-          // Create aggregated records for each main region
-          const aggregatedRecords: typeof filteredRecords = []
+            // If we found child records, use them
+            if (childRecords.length > 0) {
+              filteredRecords = childRecords
+            } else {
+              // Last resort: create synthetic records from parent data if available
+              const parentRecord = filteredRecords.find(r =>
+                r.segment === selectedParentGeo || r.geography === selectedParentGeo
+              )
 
-          regionGroups.forEach((childRecords, regionName) => {
-            // Aggregate time series from all children (countries) in this region
-            const aggregatedTimeSeries: { [year: string]: number } = {}
-            childRecords.forEach(record => {
-              Object.entries(record.time_series).forEach(([year, value]) => {
-                aggregatedTimeSeries[year] = (aggregatedTimeSeries[year] || 0) + (value as number)
+              if (parentRecord) {
+                // Create individual records for each child by distributing parent value
+                const syntheticRecords: typeof filteredRecords = []
+                const childCount = expectedChildren.length
+
+                expectedChildren.forEach((childName) => {
+                  const childTimeSeries: { [year: string]: number } = {}
+                  Object.entries(parentRecord.time_series).forEach(([year, value]) => {
+                    // Distribute proportionally (equal distribution as fallback)
+                    childTimeSeries[year] = (value as number) / childCount
+                  })
+
+                  syntheticRecords.push({
+                    ...parentRecord,
+                    geography: selectedParentGeo,
+                    segment: childName,
+                    time_series: childTimeSeries,
+                    is_aggregated: false
+                  } as any)
+                })
+
+                filteredRecords = syntheticRecords
+                console.log('🌍 Created synthetic records for children:', {
+                  parent: selectedParentGeo,
+                  children: expectedChildren
+                })
+              }
+            }
+
+            console.log('🌍 Final By Region records for', selectedParentGeo, ':', {
+              recordCount: filteredRecords.length,
+              segments: [...new Set(filteredRecords.map(r => r.segment))]
+            })
+          } else {
+            // No parent geography selected - use original aggregation logic
+            // Group records by their parent geography (region)
+            const regionGroups = new Map<string, typeof filteredRecords>()
+            const mainRegions = ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'Middle East', 'Africa', 'United States']
+
+            filteredRecords.forEach(record => {
+              // Use the record's geography as the grouping key (this is the parent region)
+              const region = record.geography
+              if (region && mainRegions.includes(region)) {
+                if (!regionGroups.has(region)) {
+                  regionGroups.set(region, [])
+                }
+                regionGroups.get(region)!.push(record)
+              }
+            })
+
+            console.log('🌍 Aggregating By Region to main regions:', [...regionGroups.keys()])
+
+            // Create aggregated records for each main region
+            const aggregatedRecords: typeof filteredRecords = []
+
+            regionGroups.forEach((childRecords, regionName) => {
+              // Aggregate time series from all children (countries) in this region
+              const aggregatedTimeSeries: { [year: string]: number } = {}
+              childRecords.forEach(record => {
+                Object.entries(record.time_series).forEach(([year, value]) => {
+                  aggregatedTimeSeries[year] = (aggregatedTimeSeries[year] || 0) + (value as number)
+                })
+              })
+
+              // Create aggregated record for the region
+              const aggregatedRecord = {
+                ...childRecords[0],
+                geography: regionName,
+                segment: regionName, // Use region name as segment for display
+                time_series: aggregatedTimeSeries,
+                is_aggregated: true
+              }
+              aggregatedRecords.push(aggregatedRecord as any)
+
+              console.log('🌍 Aggregated region:', {
+                regionName,
+                countriesFound: childRecords.length,
+                countries: childRecords.map(r => r.segment)
               })
             })
 
-            // Create aggregated record for the region
-            const aggregatedRecord = {
-              ...childRecords[0],
-              geography: regionName,
-              segment: regionName, // Use region name as segment for display
-              time_series: aggregatedTimeSeries,
-              is_aggregated: true
-            }
-            aggregatedRecords.push(aggregatedRecord as any)
-
-            console.log('🌍 Aggregated region:', {
-              regionName,
-              countriesFound: childRecords.length,
-              countries: childRecords.map(r => r.segment)
+            filteredRecords = aggregatedRecords
+            console.log('🌍 After regional aggregation:', {
+              recordsAfterAggregation: filteredRecords.length,
+              regions: [...new Set(filteredRecords.map(r => r.segment))]
             })
-          })
-
-          filteredRecords = aggregatedRecords
-          console.log('🌍 After regional aggregation:', {
-            recordsAfterAggregation: filteredRecords.length,
-            regions: [...new Set(filteredRecords.map(r => r.segment))]
-          })
+          }
         } else if (isByStateSegmentType || isByCountrySegmentType) {
           // SPECIAL CASE: For "By State" and "By Country" segment types
           // These have segments that represent states/countries (e.g., "Northeast U.S.", "Midwest U.S.")

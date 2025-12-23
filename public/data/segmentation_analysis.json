@@ -1,11 +1,580 @@
 {
   "Global": {
-    "By Blade Type": {},
-    "By Blade Material": {},
-    "By Slitting Stage": {},
-    "By Processed Material Type": {},
-    "By End-use Industry": {},
-    "By Operating Speed": {},
-    "By Sales Channel": {}
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {
+      "United States": {
+        "United States": {}
+      },
+      "Europe": {
+        "Germany": {},
+        "Italy": {},
+        "UK": {},
+        "Rest of Europe": {}
+      },
+      "Asia": {
+        "Japan": {},
+        "South Korea": {},
+        "China": {},
+        "Rest of Asia": {}
+      }
+    }
+  },
+  "United States": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "Europe": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {
+      "Germany": {},
+      "Italy": {},
+      "UK": {},
+      "Rest of Europe": {}
+    }
+  },
+  "Germany": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "Italy": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "UK": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "Rest of Europe": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "Asia": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {
+      "Japan": {},
+      "South Korea": {},
+      "China": {},
+      "Rest of Asia": {}
+    }
+  },
+  "Japan": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "South Korea": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "China": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
+  },
+  "Rest of Asia": {
+    "By Blade Type": {
+      "Single-edge razor blades": {},
+      "Double-edge razor blades": {},
+      "Triple-edge / multi-edge blades": {}
+    },
+    "By Blade Material": {
+      "Carbon steel": {},
+      "Stainless steel": {},
+      "High-speed steel (HSS)": {},
+      "Carbide / carbide-tipped": {},
+      "Others (Ceramic etc.)": {}
+    },
+    "By Slitting Stage": {
+      "Primary Web Slitting": {},
+      "Secondary / Finish Slitting": {},
+      "Rewinding and Trim Slitting": {}
+    },
+    "By Processed Material Type": {
+      "Films (BOPP, PET, PE, PVC)": {},
+      "Paper & Paperboard": {},
+      "Foils (Aluminum, Copper)": {},
+      "Non-wovens & Textiles": {},
+      "Labels & Tapes": {}
+    },
+    "By End-use Industry": {
+      "Flexible Packaging": {},
+      "Converting / Printing": {},
+      "Label Manufacturing": {},
+      "Tape & Adhesive": {},
+      "Medical & Hygiene": {},
+      "Others (Automotive, Battery etc.)": {}
+    },
+    "By Operating Speed": {
+      "Low speed (up to 200 m/min)": {},
+      "Medium speed (200-600 m/min)": {},
+      "High speed (over 600 m/min)": {}
+    },
+    "By Sales Channel": {
+      "Direct Sales": {},
+      "Distributor/Dealer Network": {},
+      "Online/E-commerce": {},
+      "OEM/Integrators": {}
+    },
+    "By Region": {}
   }
 }
