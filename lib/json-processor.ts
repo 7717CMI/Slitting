@@ -1250,7 +1250,7 @@ export async function processJsonDataAsync(
     
     // Build metadata
     const metadata: Metadata = {
-      market_name: 'Razor Slitting Blade Market',
+      market_name: 'U.S., Europe & Asia Razor Slitting Blade Market',
       market_type: 'Market Analysis',
       industry: 'Chemicals & Materials',
       years: allYears,

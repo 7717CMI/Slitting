@@ -204,7 +204,7 @@ export default function DashboardPage() {
                 Coherent Dashboard
               </h1>
               <h2 className="text-sm text-black">
-                {dashboardName || 'Razor Slitting Blade Market'}
+                {dashboardName || 'U.S., Europe & Asia Razor Slitting Blade Market'}
               </h2>
             </div>
           </div>
