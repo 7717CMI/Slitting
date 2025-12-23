@@ -145,10 +145,11 @@ export function GlobalKPICards() {
     // Get market name from metadata, fallback to "Global Market"
     const marketName = data.metadata.market_name || 'Global Market'
 
+    // Don't prepend "Global" to market name since it's already descriptive
     const geographyLabel = actualSelectedGeographies.length === 0
       ? marketName
       : actualSelectedGeographies.length === 1
-      ? `${actualSelectedGeographies[0]} ${marketName}`
+      ? (actualSelectedGeographies[0] === 'Global' ? marketName : `${actualSelectedGeographies[0]} ${marketName}`)
       : `${actualSelectedGeographies.length} Geographies ${marketName}`
     const segmentTypeLabel = targetSegmentType || 'All Segments'
 
